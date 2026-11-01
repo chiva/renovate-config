@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Home Assistant custom integrations.",
+  "packageRules": [
+    {
+      "description": "pytest-homeassistant-custom-component is welded to one Home Assistant core version: its own PR, so a failure caused by an HA bump is attributable.",
+      "matchPackageNames": ["pytest-homeassistant-custom-component"],
+      "groupName": "home assistant test harness"
+    }
+  ]
+}

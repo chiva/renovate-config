@@ -1,0 +1,29 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  RENOVATE_IMAGE: "ghcr.io/renovatebot/renovate:44.198.3"
+
+jobs:
+  validate:
+    name: Validate presets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Presets
+        run: >-
+          docker run --rm -v "$PWD":/w -w /w --entrypoint renovate-config-validator "$RENOVATE_IMAGE"
+          --strict default.json python-app.json ha-integration.json ha-addon.json
+
+      - name: Repository config
+        run: >-
+          docker run --rm -v "$PWD":/w -w /w --entrypoint renovate-config-validator "$RENOVATE_IMAGE"
+          --strict

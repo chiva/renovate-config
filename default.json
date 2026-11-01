@@ -1,0 +1,31 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Baseline for every chiva repo: one weekly batch, green non-major updates merge themselves, majors wait for a human.",
+  "extends": ["config:best-practices", ":semanticCommits", ":timezone(Europe/Madrid)"],
+  "schedule": ["before 8am on monday"],
+  "minimumReleaseAge": "3 days",
+  "minimumReleaseAgeBehaviour": "timestamp-optional",
+  "prConcurrentLimit": 5,
+  "pre-commit": {
+    "enabled": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 4am on monday"]
+  },
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "automergeStrategy": "squash",
+  "packageRules": [
+    {
+      "description": "One PR for every non-major update. Groups declared later (by presets or the repo) take precedence.",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "non-major dependencies"
+    },
+    {
+      "description": "Merge once the repo's required checks pass. Majors are left out on purpose. Safe only because github-infra enforces required checks on every default branch.",
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest", "lockFileMaintenance"],
+      "automerge": true
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Python services shipped as Docker images, built with uv in a builder stage and run on the python image.",
+  "packageRules": [
+    {
+      "description": "Pin exact versions in pyproject.toml. With a bare '>=' floor Renovate never classifies an update, so new majors land silently inside lock-file maintenance; and with a floor uv may resolve a release younger than minimumReleaseAge, failing the PR with 'Artifact update problem'. Safe because these apps ship as images, not to PyPI. A repo publishing a library overrides this for that package file.",
+      "matchManagers": ["pep621"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "description": "requires-python is support policy (CI matrix and base images), not a dependency.",
+      "matchDepTypes": ["requires-python"],
+      "enabled": false
+    },
+    {
+      "description": "The uv builder creates the venv under lib/pythonX.Y and the runtime stage copies it, so both images must share the Python minor: one PR moves them together. Held below 3.14; a repo raises allowedVersions to adopt it.",
+      "matchManagers": ["dockerfile"],
+      "matchPackageNames": ["python", "ghcr.io/astral-sh/uv"],
+      "groupName": "python runtime",
+      "allowedVersions": "<3.14"
+    },
+    {
+      "description": "Read the Python version out of the uv image's compound tag (python3.13-trixie-slim) so it moves in step with the python image.",
+      "matchManagers": ["dockerfile"],
+      "matchPackageNames": ["ghcr.io/astral-sh/uv"],
+      "versioning": "regex:^python(?<major>\\d+)\\.(?<minor>\\d+)-(?<compatibility>.+)$"
+    }
+  ]
+}

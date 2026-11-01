@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Home Assistant add-ons that wrap one of chiva's own images. The wrapped release is pinned in three places that must move together: the Dockerfile ARG default, build.yaml's build_from and config.yaml's version (annotated with a '# renovate:' comment).",
+  "customManagers": [
+    {
+      "description": "build.yaml build_from tags: the per-arch base the Home Assistant builder injects.",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)build\\.yaml$/"],
+      "matchStrings": ["(?<depName>ghcr\\.io/chiva/[^:\\s\"]+):(?<currentValue>[^\"\\s]+)"],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "semver"
+    },
+    {
+      "description": "config.yaml version: the tag the Supervisor pulls. The preceding comment names the wrapped image.",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)config\\.yaml$/"],
+      "matchStrings": ["#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)\\s*\\n\\s*version:\\s*\"(?<currentValue>[^\"]+)\""],
+      "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "The wrapped image is tracked by readable tag so the three pins stay in lockstep and match the signed upstream release; digest pinning would break that. Actions keep their SHA pins.",
+      "matchDatasources": ["docker"],
+      "pinDigests": false
+    },
+    {
+      "description": "One PR per upstream release across all three pins, with no stability wait: the release already passed the upstream repo's CI and the add-on should follow it.",
+      "matchPackageNames": ["ghcr.io/chiva/**"],
+      "groupName": "upstream release",
+      "minimumReleaseAge": "0 days"
+    }
+  ]
+}

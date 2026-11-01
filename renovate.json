@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["local>chiva/renovate-config"],
+  "enabledManagers": ["github-actions", "custom.regex"],
+  "customManagers": [
+    {
+      "description": "Renovate image used by the preset validator.",
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github/workflows/validate\\.yml$/"],
+      "matchStrings": ["RENOVATE_IMAGE: \"(?<depName>[^:\"]+):(?<currentValue>[^\"]+)\""],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}
