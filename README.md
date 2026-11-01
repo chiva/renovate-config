@@ -7,7 +7,7 @@ Shared [Renovate](https://docs.renovatebot.com/) presets for chiva's repos.
 | `local>chiva/renovate-config` | every repo | Weekly batch on Monday morning (Europe/Madrid), 3-day release age, one non-major group, automerge of green non-major/digest/pin/lock-file PRs; majors and digest-only action updates (a moved tag) stay manual; actions pinned to full semver tags |
 | `local>chiva/renovate-config:python-app` | Python services shipped as images | Exact pins in `pyproject.toml`, `requires-python` untouched, python + uv images moved together and held below 3.14 |
 | `local>chiva/renovate-config:ha-integration` | Home Assistant integrations | `pytest-homeassistant-custom-component` in its own manually merged PR; `hassil` and `home-assistant-intents` follow it by hand |
-| `local>chiva/renovate-config:ha-addon` | Home Assistant add-ons wrapping a chiva image | Lockstep updates of the wrapped image across Dockerfile, `build.yaml` and `config.yaml` |
+| `local>chiva/renovate-config:ha-addon` | Home Assistant add-ons wrapping a chiva image | Lockstep updates of the wrapped image across Dockerfile, `build.yaml` and `config.yaml`, proposed as soon as it is released (no release age, no weekly window) |
 
 A repo's `renovate.json` extends `local>chiva/renovate-config` plus its type preset, and keeps only its own
 `enabledManagers`, custom managers and package rules. Repo rules run after preset rules, so they win.
