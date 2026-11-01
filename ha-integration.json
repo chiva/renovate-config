@@ -3,9 +3,15 @@
   "description": "Home Assistant custom integrations.",
   "packageRules": [
     {
-      "description": "pytest-homeassistant-custom-component is welded to one Home Assistant core version: its own PR, so a failure caused by an HA bump is attributable.",
+      "description": "pytest-homeassistant-custom-component is welded to one Home Assistant core version: its own PR, and a human merges it, because moving Home Assistant usually means moving the companion pins below by hand to the versions that core release requires.",
       "matchPackageNames": ["pytest-homeassistant-custom-component"],
-      "groupName": "home assistant test harness"
+      "groupName": "home assistant test harness",
+      "automerge": false
+    },
+    {
+      "description": "Companions pinned to what the harness's Home Assistant core requires (hassil and the intents come from the conversation integration's manifest): they move with the harness, by hand, never to their own latest release.",
+      "matchPackageNames": ["hassil", "home-assistant-intents"],
+      "enabled": false
     }
   ]
 }
