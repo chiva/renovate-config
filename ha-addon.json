@@ -25,10 +25,11 @@
       "pinDigests": false
     },
     {
-      "description": "One PR per upstream release across all three pins, with no stability wait: the release already passed the upstream repo's CI and the add-on should follow it.",
+      "description": "One PR per upstream release across all three pins, with no stability wait and outside the weekly window: the release already passed the upstream repo's CI and the add-on should follow it on the next Renovate run.",
       "matchPackageNames": ["ghcr.io/chiva/**"],
       "groupName": "upstream release",
-      "minimumReleaseAge": "0 days"
+      "minimumReleaseAge": "0 days",
+      "schedule": ["at any time"]
     }
   ]
 }
