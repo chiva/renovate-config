@@ -1,7 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Baseline for every chiva repo: one weekly batch, green non-major updates merge themselves, majors wait for a human.",
-  "extends": ["config:best-practices", ":semanticCommits", ":timezone(Europe/Madrid)"],
+  "extends": [
+    "config:best-practices",
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":semanticCommits",
+    ":timezone(Europe/Madrid)"
+  ],
   "schedule": ["before 8am on monday"],
   "minimumReleaseAge": "3 days",
   "minimumReleaseAgeBehaviour": "timestamp-optional",
@@ -26,6 +31,12 @@
       "description": "Merge once the repo's required checks pass. Majors are left out on purpose. Safe only because github-infra enforces required checks on every default branch.",
       "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest", "lockFileMaintenance"],
       "automerge": true
+    },
+    {
+      "description": "Actions are pinned to the digest of a full semver tag, so a new release arrives as a minor/patch update with its own release age. A digest-only update means an existing tag now points at different code, the signature of a hijacked tag: a human looks at it.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["digest"],
+      "automerge": false
     }
   ]
 }
