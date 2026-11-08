@@ -33,9 +33,10 @@
       "automerge": true
     },
     {
-      "description": "Actions are pinned to the digest of a full semver tag, so a new release arrives as a minor/patch update with its own release age. A digest-only update means an existing tag now points at different code, the signature of a hijacked tag: a human looks at it.",
+      "description": "Actions are pinned to the digest of a full semver tag, so a new release arrives as a minor/patch update with its own release age. A digest-only update means an existing tag now points at different code, the signature of a hijacked tag, or an action tracked by branch moved: a human looks at it. Its own group, because one manual update in the non-major group would disable automerge for the whole batch.",
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["digest"],
+      "groupName": "github-actions digests",
       "automerge": false
     }
   ]
