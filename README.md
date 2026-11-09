@@ -4,7 +4,7 @@ Shared [Renovate](https://docs.renovatebot.com/) presets for chiva's repos.
 
 | Preset | For | What it adds |
 |---|---|---|
-| `local>chiva/renovate-config` | every repo | Weekly batch on Monday morning (Europe/Madrid), 3-day release age, one non-major group, automerge of green non-major/digest/pin/lock-file PRs; majors stay manual, and so do digest-only action updates (a moved tag or branch), grouped in their own PR so they never hold back the non-major batch; actions pinned to full semver tags |
+| `local>chiva/renovate-config` | every repo | Weekly batch on Monday morning (Europe/Madrid), 3-day release age, one non-major group, automerge of green non-major/digest/pin/lock-file PRs; majors stay manual, and so do digest-only updates of tag-pinned actions (a moved tag), grouped in their own PR so they never hold back the non-major batch; branch-tracked actions (`# main`/`# master`) from `home-assistant`, `hacs` and `frenck` automerge in a separate group; actions pinned to full semver tags |
 | `local>chiva/renovate-config:python-app` | Python services shipped as images | Exact pins in `pyproject.toml`, `requires-python` untouched, python + uv images moved together and held below 3.14 |
 | `local>chiva/renovate-config:ha-integration` | Home Assistant integrations | `pytest-homeassistant-custom-component` in its own manually merged PR; `hassil` and `home-assistant-intents` follow it by hand |
 | `local>chiva/renovate-config:ha-addon` | Home Assistant add-ons wrapping a chiva image | Lockstep updates of the wrapped image across Dockerfile, `build.yaml` and `config.yaml`, proposed as soon as it is released (no release age, no weekly window) |

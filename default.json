@@ -38,6 +38,15 @@
       "matchUpdateTypes": ["digest"],
       "groupName": "github-actions digests",
       "automerge": false
+    },
+    {
+      "description": "Actions tracked by branch (# main / # master) can only update by digest, so a new digest is routine, not a moved tag. From trusted Home Assistant ecosystem orgs they merge themselves, in their own group so a manual tag digest never holds them back. Accepted risk: a compromised default branch of these orgs runs in CI, including on main.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["digest"],
+      "matchCurrentValue": "/^(main|master)$/",
+      "matchPackageNames": ["home-assistant/**", "hacs/**", "frenck/**"],
+      "groupName": "github-actions branch digests",
+      "automerge": true
     }
   ]
 }
