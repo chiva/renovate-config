@@ -3,6 +3,11 @@
   "description": "Home Assistant custom integrations.",
   "packageRules": [
     {
+      "description": "requires-python follows the Python of the Home Assistant core the harness pins (core's .python-version), like ruff's target-version and mypy's python_version: moved by hand with the harness. Left to Renovate it tracks CPython releases, so uv tests on a Python Home Assistant doesn't run and the new floor excludes the one it does; CI stays green because core declares no upper bound.",
+      "matchDepTypes": ["requires-python"],
+      "enabled": false
+    },
+    {
       "description": "pytest-homeassistant-custom-component is welded to one Home Assistant core version: its own PR, and a human merges it, because moving Home Assistant usually means moving the companion pins below by hand to the versions that core release requires.",
       "matchPackageNames": ["pytest-homeassistant-custom-component"],
       "groupName": "home assistant test harness",
