@@ -15,6 +15,11 @@ A repo's `renovate.json` extends `local>chiva/renovate-config` plus its type pre
 Automerge is safe only because [github-infra](https://github.com/chiva/github-infra) enforces required status
 checks on every default branch: never extend this preset from a repo it does not manage.
 
+Those checks are strict (branches must be up to date with the default branch), so the preset sets
+`rebaseWhen: behind-base-branch`. Renovate's `auto` default did not detect that requirement on the
+rulesets github-infra uses and rebased only on conflicts: manual PRs (majors, moved action tags, the Home
+Assistant harness) sat behind `main` and could not be merged until someone updated them by hand.
+
 Known gap: `minimumReleaseAge` does not reach lock-file maintenance, because the package manager resolves it
 and Renovate integrates the cooldown only with npm and Poetry. uv (`exclude-newer`) and pnpm
 (`minimumReleaseAge`) must enforce it themselves; until each repo configures that, its lock refreshes can
