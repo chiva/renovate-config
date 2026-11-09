@@ -21,6 +21,7 @@
   "automergeType": "pr",
   "platformAutomerge": true,
   "automergeStrategy": "squash",
+  "rebaseWhen": "behind-base-branch",
   "packageRules": [
     {
       "description": "One PR for every non-major update. Groups declared later (by presets or the repo) take precedence.",
